@@ -12,8 +12,33 @@ Conda also provides access to thousands of packages used in data science and bio
 Conda is already available to every user of the NIBSC HPC.
 
 
-Configuring Conda
---------------------------
+Using Conda in your work
+-----------------------------
+
+.. note:: The way to load conda on the HPC has recently changed. Please follow this instructions in order to change your .bashrc accordingly.
+
+In order to work with conda, and enable both conda2 (running on python 2.7) and conda3 (running on python 3.x), please add the following lines to your *~/.bashrc* file
+
+.. code-block:: bash
+
+    source /apps/Modules/modules-apps.sh
+    alias conda2='source /apps/.conda2.sh'
+    alias conda3='source /apps/.conda3.sh'
+
+
+.. warning:: careful! if you previously had a block in your *~/.bashrc* written by a conda installation like the following, you should comment it out or remove it.
+
+.. code-block:: bash
+
+    >>> conda initialize >>>
+    # !! Contents within this block are managed by 'conda init' !!
+    __conda_setup="$('/opt/software/conda2/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+
+
+Once you have prepared your *bashrc* accordingly, you can then use conda by typing **conda2** or **conda3** to activate either version, and follow the instructions below.
+
+Configuring Conda Environments
+-----------------------------------
 
 Conda can install packages from different *channels*. This system is similar to *repositories* in other package managers. Here we’ll add a few channels that are commonly used in bioinformatics:
 
@@ -22,7 +47,6 @@ Conda can install packages from different *channels*. This system is similar to 
   [hpc-head]$ conda config --add channels defaults
   [hpc-head]$ conda config --add channels bioconda
   [hpc-head]$ conda config --add channels conda-forge
-  [hpc-head]$ conda config --add channels NIBSC HPC
 
 
 Searching for packages
@@ -145,19 +169,6 @@ Conda can install any kind of software, as long as its *recipe* (i.e. instructio
 For example, you can create an environment with Rstudio, R, and ggplot2 with a single command.
 
 
-Available Modules on the Cluster
----------------------------------
-
-Before installing something on your own environment, it is always worth checking what has been already installed for everyone on the HPC. This can be done with the following command::
-
-  [hpc-head]$ module avail
-
-Which will show the available *modules*. You can then activate a specific tool by using the following command::
-
-  [hpc-head]$ module load NAME
-
-Where *NAME* corresponds **exactly** to the name in the list generated with the previous command.
-
 
 Command reference
 ----------------------
@@ -223,3 +234,20 @@ Since macOS does not include an X server, you will need to download and install 
   [local]$ ssh -X USERNAME@hpc-head
 
 On Windows, we recommend that you use **MobaXterm** which has an integrated X server.
+
+
+
+Available Modules on the Cluster
+---------------------------------
+
+.. warning:: Modules will be replaced by the use of conda environments, except for software not available in conda repositories. Please consider phasing them out from your code!
+
+Before installing something on your own environment, it is always worth checking what has been already installed for everyone on the HPC. This can be done with the following command::
+
+  [hpc-head]$ module avail
+
+Which will show the available *modules*. You can then activate a specific tool by using the following command::
+
+  [hpc-head]$ module load NAME
+
+Where *NAME* corresponds **exactly** to the name in the list generated with the previous command.
