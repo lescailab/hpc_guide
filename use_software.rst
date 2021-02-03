@@ -237,8 +237,6 @@ On Windows, we recommend that you use **MobaXterm** which has an integrated X se
 Available Modules on the Cluster
 ---------------------------------
 
-.. warning:: Modules will be replaced by the use of conda environments, except for software not available in conda repositories. Please consider phasing them out from your code!
-
 Before installing something on your own environment, it is always worth checking what has been already installed for everyone on the HPC. This can be done with the following command::
 
   [myuser@headnode1]$ module avail
