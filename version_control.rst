@@ -15,13 +15,9 @@ We recommend to read the tutorial and download their `cheatsheet`_ which will pr
 Configuring Git SSH
 -------------------------
 
-First of all you need to configure SSH, both on your laptop as well as on your cluster home. This is explained in our guide `here`_.
+Using git via SSH you will be able to update your repository without typing your username and password everytime.
 
-.. _here: http://hpc.nibsc.ac.uk/wiki/new_wiki/howto/gitssh.html
-
-Once Git SSH has been configured, you will be able to update your repository without typing your username and password everytime.
-
-The next step is to generate your own SSH key as documented at `this page`_ and then configure github and record your SSH key on your own github profile settings, as explained in this `github page`_.
+In order to do this, you need to generate your own SSH key as documented at `this page`_ and then configure github and record your SSH key on your own github profile settings, as explained in this `github page`_.
 
 .. _this page: https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
 .. _github page: https://help.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account

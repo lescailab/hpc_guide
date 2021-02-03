@@ -1,7 +1,7 @@
 Installing and using software
 ==================================
 
-We recommend that you install and use the Conda package manager to install software on NIBSC HPC.
+We recommend that you install and use the Conda package manager to install software on EOS HPC.
 
 Why Conda?
 ----------------
@@ -9,33 +9,30 @@ Why Conda?
 The interesting thing about Conda is that it allows you to use separate environments for separate projects. If you have a project where you’ve installed a number of packages for Python or R you might not need to use them on another project, or you might need different versions of those packages: in this case, you can just create separate environments for them instead of installing and uninstalling multiple times. With separate environments you force yourself to make the dependencies for each project explicit which in turn makes it easier for collaborators to run your code and improves reproducibility.
 
 Conda also provides access to thousands of packages used in data science and bioinformatics. These packages can be installed with a single command, so you don’t have to worry about compilers, dependencies, and where to put binaries.
-Conda is already available to every user of the NIBSC HPC.
+Conda is already available to every user of the EOS HPC.
 
 
 Using Conda in your work
 -----------------------------
 
-.. note:: The way to load conda on the HPC has recently changed. Please follow this instructions in order to change your .bashrc accordingly.
-
-In order to work with conda, and enable both conda2 (running on python 2.7) and conda3 (running on python 3.x), please add the following lines to your *~/.bashrc* file
-
-.. code-block:: bash
-
-    source /apps/Modules/modules-apps.sh
-    alias conda2='source /apps/.conda2.sh'
-    alias conda3='source /apps/.conda3.sh'
-
-
-.. warning:: careful! if you previously had a block in your *~/.bashrc* written by a conda installation like the following, you should comment it out or remove it.
+Conda3 (running on python 3.x), is already available on EOS as a module.
+All you have to do in order to use it, is to load the appropriate module
 
 .. code-block:: bash
 
-    >>> conda initialize >>>
-    # !! Contents within this block are managed by 'conda init' !!
-    __conda_setup="$('/opt/software/conda2/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+    module load conda/anaconda3
 
 
-Once you have prepared your *bashrc* accordingly, you can then use conda by typing **conda2** or **conda3** to activate either version, and follow the instructions below.
+you can also add this command to your **.bashrc** file, so it loads at every login, or use the following command:
+
+
+.. code-block:: bash
+
+    module initadd conda/anaconda3
+
+to let the modules do that for you.
+
+
 
 Configuring Conda Environments
 -----------------------------------
@@ -44,9 +41,9 @@ Conda can install packages from different *channels*. This system is similar to 
 
 .. code-block:: bash
 
-  [hpc-head]$ conda config --add channels defaults
-  [hpc-head]$ conda config --add channels bioconda
-  [hpc-head]$ conda config --add channels conda-forge
+  [myuser@headnode1]$ conda config --add channels defaults
+  [myuser@headnode1]$ conda config --add channels bioconda
+  [myuser@headnode1]$ conda config --add channels conda-forge
 
 
 Searching for packages
@@ -54,7 +51,7 @@ Searching for packages
 
 You can easily search for Conda packages through the website anaconda.org or using the conda search command::
 
-  [hpc-head]$ conda search rstudio
+  [myuser@headnode1]$ conda search rstudio
 
 
 Remember that the Conda package may not be called in the same way as the exact official name of the software. For example, the Conda package for the tool biobambam2 is just called biobambam, so searching for biobambam2 would not return any results.
@@ -65,8 +62,8 @@ Using environments
 
 Conda comes with a single environment known as the *base* environment. To activate the base environment, just type::
 
-  [hpc-head]$ conda activate
-  (base) [hpc-head]$
+  [myuser@headnode1]$ conda activate
+  (base) [myuser@headnode1]$
 
 You now have access to the software installed in the base environment.
 
@@ -74,7 +71,7 @@ If we wanted to create a new environment with the newest version of PySAM, we sh
 
 .. code-block:: bash
 
-    [hpc-head]$ conda create --name amazing-project pysam
+    [myuser@headnode1]$ conda create --name amazing-project pysam
     Solving environment: done
 
     ## Package Plan ##
@@ -159,8 +156,8 @@ This gives us a clean environment with just the minimal number of packages neces
 
 .. code-block:: bash
 
-    [hpc-head]$ conda activate amazing-project
-    (amazing-project) [hpc-head]$ python -c 'import pysam; print(pysam.__version__)'
+    [myuser@headnode1]$ conda activate amazing-project
+    (amazing-project) [myuser@headnode1]$ python -c 'import pysam; print(pysam.__version__)'
     0.6.0
 
 You will notice that the prompt changed to show you that you’re now in the amazing-project environment.
@@ -175,29 +172,29 @@ Command reference
 
 To install software in the currently activated environment::
 
-    (amazing-project) [hpc-head]$ conda install PACKAGE-NAME
+    (amazing-project) [myuser@headnode1]$ conda install PACKAGE-NAME
 
 To remove a software package from the currently activated environment::
 
-    (amazing-project) [hpc-head]$ conda remove PACKAGE-NAME
+    (amazing-project) [myuser@headnode1]$ conda remove PACKAGE-NAME
 
 To update a software package in the currently activated environment::
 
-    (amazing-project) [hpc-head]$ conda update PACKAGE-NAME
+    (amazing-project) [myuser@headnode1]$ conda update PACKAGE-NAME
 
 Since Conda keeps track of what you are loading in the environment you created, it will tell you exactly which packages are used in the environment. This is very useful for collaborating with others, since your collaborators can create an exact copy of your environment with a single command.
 
 To export your environment so that others can recreate it::
 
-    (amazing-project) [hpc-head]$ conda env export > environment.yml
+    (amazing-project) [myuser@headnode1]$ conda env export > environment.yml
 
 The **environment.yml** file contains an exact specification of your environment and the packages installed. You share this with other collaborators, and they will be able to recreate your environment by running::
 
-    [hpc-head]$ conda env create -f environment.yml
+    [myuser@headnode1]$ conda env create -f environment.yml
 
 You can read more about using environments for projects `here`_. There’s also also a `cheat sheet`_ with Conda commands available.
 
-.. _here: http://hpc.nibsc.ac.uk/wiki/hpcdoc/best_practices.html
+.. _here: http://hpc.EOS.ac.uk/wiki/hpcdoc/best_practices.html
 .. _cheat sheet: http://know.continuum.io/rs/387-XNW-688/images/conda-cheatsheet.pdf
 
 
@@ -221,17 +218,17 @@ In this case the project should and probably will supply you for either a set of
 Using graphical interfaces
 ----------------------------
 
-In order to use programs with a graphical user interface on NIBSC HPC you should activate X-forwarding, when connecting to the cluster.
+In order to use programs with a graphical user interface on EOS HPC you should activate X-forwarding, when connecting to the cluster.
 
 You can use X-forwarding to tunnel individual graphical programs to your local desktop. This works well for many programs, but programs that do fancy graphics or anything animated might not work well.
 
 On Linux you simply need to tell SSH that you wish to enable X-forwarding. To do this, add -X to the ssh command when logging in to the cluster, for example::
 
-    [local]$ ssh -X USERNAME@hpc-head
+    [local]$ ssh -X USERNAME@eos.unipv.it
 
 Since macOS does not include an X server, you will need to download and install XQuartz on your computer. When installed, reboot the computer. Now, you just need to tell SSH that you wish to enable X-forwarding. To do this, add -X to the ssh command when logging in to the cluster, for example::
 
-  [local]$ ssh -X USERNAME@hpc-head
+  [local]$ ssh -X USERNAME@eos.unipv.it
 
 On Windows, we recommend that you use **MobaXterm** which has an integrated X server.
 
@@ -244,10 +241,10 @@ Available Modules on the Cluster
 
 Before installing something on your own environment, it is always worth checking what has been already installed for everyone on the HPC. This can be done with the following command::
 
-  [hpc-head]$ module avail
+  [myuser@headnode1]$ module avail
 
 Which will show the available *modules*. You can then activate a specific tool by using the following command::
 
-  [hpc-head]$ module load NAME
+  [myuser@headnode1]$ module load NAME
 
 Where *NAME* corresponds **exactly** to the name in the list generated with the previous command.

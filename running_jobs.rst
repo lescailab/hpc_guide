@@ -1,9 +1,9 @@
 Running Jobs on the HPC
 =========================
 
-Since NIBSC HPC is a shared system, all computations must be carried out through a queue. Users submit jobs to the queue and the jobs then run when it’s their turn. To handle different workloads, jobs can be submitted to one or more partitions, which are essentially queues that have been assigned certain restrictions such as the maximum running time.
+Since EOS HPC is a shared system, all computations must be carried out through a queue. Users submit jobs to the queue and the jobs then run when it’s their turn. To handle different workloads, jobs can be submitted to one or more partitions, which are essentially queues that have been assigned certain restrictions such as the maximum running time.
 
-The queueing system used at NIBSC is Slurm. Users that are familiar with Sun Grid Engine (SGE) or Portable Batch System (PBS), will find Slurm very familiar.
+The queueing system used at EOS is Slurm. Users that are familiar with Sun Grid Engine (SGE) or Portable Batch System (PBS), will find Slurm very familiar.
 
 
 .. note::
@@ -14,13 +14,13 @@ To get an overview of the available partitions:
 
 .. code-block:: bash
 
-  [hpc-head]$ sinfo
+  [myuser@headnode1]$ sinfo
 
 This will list each partition and all of the compute nodes assigned to each partition and the maximum walltime (running time) a job in the partition can have.
 
 By typing a slightly different command::
 
-  [hpc-head]$ sinfo -N --long
+  [myuser@headnode1]$ sinfo -N --long
 
 All nodes will be listed and all partitions they belong to, together with the available resources such as the number of cores per node, available memory per node.
 
@@ -39,7 +39,7 @@ An interactive job effectively gives you a shell on a compute node so that you c
 
 To submit an interactive job::
 
-  [hpc-head]$ srun --pty /bin/bash
+  [myuser@headnode1]$ srun --pty /bin/bash
   srun: job 17129453 queued and waiting for resources
   srun: job 17129453 has been allocated resources
   [b1s3]$
@@ -48,14 +48,14 @@ This may take some time since you must wait until it’s your turn in the queue.
 
 You may also specify some requirements for the job, such as the amount of memory that should be allocated::
 
-  [hpc-head]$ srun --mem=16g --pty /bin/bash
+  [myuser@headnode1]$ srun --mem=16g --pty /bin/bash
 
-When running a job you have access to the same filesystems as when running on the frontend. Thus, you can access your home folder and project folders with the same paths as on hpc-head.
+When running a job you have access to the same filesystems as when running on the frontend. Thus, you can access your home folder and project folders with the same paths as on myuser@headnode1.
 
 When you’re done with your interactive session on the node, it can be exited by running the exit command or pressing Control + D::
 
   [b1s3]$ exit
-  [hpc-head]$
+  [myuser@headnode1]$
 
 You’ll now be back on the frontend.
 
@@ -72,7 +72,7 @@ A job script looks like this:
   #SBATCH --partition WORK
   #SBATCH -D /my/working/directory
   #SBATCH -c 1
-  #SBATCH --mem-per-cpu 4G
+  #SBATCH --mem 4G
   #SBATCH -t 02:00:00
 
   echo hello world > result.txt
@@ -123,9 +123,9 @@ To submit a job for this script, save it to a file (e.g. example.sh) and run:
 
 .. code-block:: bash
 
-  [hpc-head]$ sbatch example.sh
+  [myuser@headnode1]$ sbatch example.sh
   Submitted batch job 17129500
-  [hpc-head]$
+  [myuser@headnode1]$
 
 Contrary to srun, this command returns immediately, giving us a job id to identify our job.
 
@@ -134,19 +134,19 @@ Checking job status
 
 To check the status of a job::
 
-  [hpc-head]$ squeue -j 17129500
+  [myuser@headnode1]$ squeue -j 17129500
 
 To check the status of all of your submitted jobs::
 
-  [hpc-head]$ squeue -u USERNAME
+  [myuser@headnode1]$ squeue -u USERNAME
 
 You can also omit the username flag to get an overview of all jobs that have been submitted to the queue::
 
-  [hpc-head]$ squeue
+  [myuser@headnode1]$ squeue
 
 Cancelling a job
 -------------------
 
 Jobs can be cancelled using the scancel command::
 
-  [hpc-head]$ scancel 17129500
+  [myuser@headnode1]$ scancel 17129500

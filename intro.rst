@@ -27,7 +27,7 @@ Like at the supermarket or an office, you stand in the queue and wait until it�
 
 The queue manager also allows you to specify certain requirements for your program to run. For example, your program may need to run on a node with a lot of memory. If you specify this when submitting your job, the queue manager will make sure to run the job on a node with at least that amount of memory available.
 
-At NIBSC we use a queue manager called Slurm: to run your programs on the HPC, you’ll be interacting a lot with Slurm.
+At EOS we use a queue manager called Slurm: to run your programs on the HPC, you’ll be interacting a lot with Slurm.
 
 
 Things to remember…
@@ -37,7 +37,7 @@ A few things that you should keep in mind when using the cluster:
 
     - The nodes in a cluster are set up so that they’re all (more or less) identical. Software that is available on one node will also be available on all other nodes and you can access your files in the same way on all nodes. When the queue manager runs your job on a node, it more or less corresponds to you logging in to the node and running the program yourself.
 
-    - You access the cluster through a single node, often denoted the frontend or head node (in our case *hpc-head*). The frontend node is identical to the other nodes, but it is set up to allow access from the Internet. Your day-to-day interaction with the cluster goes through the frontend. But, you should not run any computation or memory intensive programs on the frontend. All users share the frontend’s resources and you should only use it for basics things like looking around the file system, writing scripts, and submitting jobs.
+    - You access the cluster through a single node, often denoted the frontend or head node (in our case *headnode1*). The frontend node is identical to the other nodes, but it is set up to allow access from the Internet. Your day-to-day interaction with the cluster goes through the frontend. But, you should not run any computation or memory intensive programs on the frontend. All users share the frontend’s resources and you should only use it for basics things like looking around the file system, writing scripts, and submitting jobs.
 
 In the coming sections you will learn how to connect to the cluster so that you can start submitting jobs.
 

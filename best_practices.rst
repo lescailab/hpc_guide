@@ -74,10 +74,6 @@ docs
 This folder is mainly for large projects where it may be nice to document each analysis in its own file. If you use plain text files as shown above, remember to give them numbers to make it easier for the reader to figure out where to begin.
 We recommend however to document all activities performed on your data in a reproducible research format (a Jupyter notebook or a Markdown notebook/document): this will facilitate complete understanding of your analyses and the rationale behind all choices you made during the project (including file renaming, folder creation, etc.).
 
-If you're interested in how we document our own workflow, you may have a look at this `page`_: we run many different projects and therefore we maintain a specific repository for all projects to version control both the project-specific code as well as our markdown notes.
-
-.. _page: http://hpc.nibsc.ac.uk/wiki/new_wiki/howto/reporting_workflow.html
-
 In addition to the folders described above, the project root should also contain at least two files: a file documenting your project structure (this could just contain a short introduction to the project and a link to this page) and a file describing your environment.
 
 
@@ -112,24 +108,22 @@ Use project-specific environments
 
 An environment is a isolated collection of programs and libraries. You can have multiple environments (e.g. one for each project) and these environments can have different software and even different versions of the same software installed simultaneously. To use an environment you must activate it. This will load all of the software available in the environment into your shell so that it is available as any other program installed on the machine.
 
-Detailed documentation on how to use the conda command can be found `here`_. Then run:
-
-.. _here: http://hpc.nibsc.ac.uk/wiki/hpcdoc/use_software.html
+Detailed documentation on how to use the conda command can be found on the **use software** section. Then run:
 
 .. code-block:: bash
 
-    [hpc-head]$ conda activate
-    (base) [hpc-head]$ conda create -n myproject python=3.5
+    [myuser@headnode1]$ conda activate
+    (base) [myuser@headnode1]$ conda create -n myproject python=3.5
 
 
 This will create an environment called myproject with Python 3.5 installed. To enter the environment, use this command::
 
-    [hpc-head]$ conda activate myproject
-    (myproject) [hpc-head]$
+    [myuser@headnode1]$ conda activate myproject
+    (myproject) [myuser@headnode1]$
 
 Now check that the environment has been activated correctly by starting Python::
 
-    [hpc-head]$ python
+    [myuser@headnode1]$ python
     Python 3.5.1 |Continuum Analytics, Inc.| (default, Dec 7 2015, 11:24:55)
     [GCC 4.2.1 (Apple Inc. build 5577)] on darwin
     Type "help", "copyright", "credits" or "license" for more information.
@@ -140,7 +134,7 @@ Now check that the environment has been activated correctly by starting Python::
 
 As you can see running the python command now opens Python 3.5.1 and we can also see that the Python installation was provided by Continuum, the company providing Anaconda. However, if we try to import e.g. numpy we get an error because this package has not been installed in the environment. Let’s try to install it. Press Control-d to close the Python interpreter and then run this command::
 
-    [hpc-head]$ conda install numpy
+    [myuser@headnode1]$ conda install numpy
 
 This will install the latest version of the numpy package into the current environment (you may have to say yes to installing the packages). Now try to open Python again and import numpy. It should work this time.
 
@@ -148,26 +142,26 @@ The conda install command lets you choose exactly which version of the package t
 
 Before leaving the environment, it might be good to export the environment and its packages to make it available to other people. We can do this with::
 
-    (myproject) [hpc-head]$ conda env export > environment.yml
+    (myproject) [myuser@headnode1]$ conda env export > environment.yml
 
 Which allows other members of the project to recreate your exact environment::
 
-    [hpc-head]$ conda env create -f environment.yml
-    [hpc-head]$ conda activate myproject
+    [myuser@headnode1]$ conda env create -f environment.yml
+    [myuser@headnode1]$ conda activate myproject
 
 
 When you are done working with your project, or you want to switch to another environment for working with another project, run the command::
 
-    [hpc-head]$ conda deactivate
+    [myuser@headnode1]$ conda deactivate
 
 
 You may think that Anaconda only works for Python and Python packages, however, Anaconda actually works for any program that is available as an Anaconda package (which may Python, R or any other language, including binaries). Packages are provided through channels. While the official Anaconda channel contains thousands of popular packages, other channels provide even more packages. One such channel is the R channel which provides access to the R programming language and many popular libraries used with R. To get access to the R channel run::
 
-    [hpc-head]$ conda config --add channels r
+    [myuser@headnode1]$ conda config --add channels r
 
 Another great channel is the **Bioconda** channel which provides access to hundreds of packages related to bioinformatics such as BWA, samtools, BLAST etc.::
 
-    [hpc-head]$ conda config --add channels bioconda
+    [myuser@headnode1]$ conda config --add channels bioconda
 
 
 To make things more reproducible, rather than installing packages one by one in an interactive session, Anaconda allows you to specify a list of channels and packages with specific versions in an environment file. You can create a file called environment.yml in the project folder and put this in the file:
@@ -186,4 +180,4 @@ To make things more reproducible, rather than installing packages one by one in 
 
 As you work you may need to change your environment, e.g. update a package to a more recent version, add or remove a package. To do this, just modify the environment.yml file and then run::
 
-    [hpc-head]$ conda env update --prune
+    [myuser@headnode1]$ conda env update --prune

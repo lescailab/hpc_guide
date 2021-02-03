@@ -16,18 +16,18 @@ You can read more about Nextflow on `their website`_.
 Launching a Nextflow pipeline
 ------------------------------
 
-Nextflow is already installed on the cluster. To use it, you need to activate the module installed by typing the following command::
+Nextflow can be installed as a conda environment. To use it, you need to activate the environment by typing the following command::
 
-  [hpc-head]$ module load NextFlow/latest
+  [myuser@headnode1]$ conda activate your_nf_name
 
-Once the module is activated, you might test Nextflow simply by typing::
+Once the environment is activated, you might test Nextflow simply by typing::
 
-  [hpc-head]$ nextflow -C /path/to/myconfig.config run /path/to/myscript.nf
+  [myuser@headnode1]$ nextflow -C /path/to/myconfig.config run /path/to/myscript.nf
 
 
 .. warning::
 
-  Running Nextflow, particularly when running longer and more complex pipelines, can be memory intensive if not computing intensive. Like any other computations, please **do not run on hpc-head** as this might impede other uses to access the login node and therefore use the HPC.
+  Running Nextflow, particularly when running longer and more complex pipelines, can be memory intensive if not computing intensive. Like any other computations, please **do not run on login node** as this might impede other uses to access the login node and therefore use the HPC.
   Please run Nextflow either with an interactive job for testing, requesting minimal amount of resources, or within a job script for larger scale testing or production analyses.
 
 
@@ -36,7 +36,7 @@ Testing your pipelines
 
 If you need to test your code, particularly when writing a new pipeline, we recommend launching an interactive job as explained in other pages::
 
-  [hpc-head]$ srun --mem=2g --pty /bin/bash
+  [myuser@headnode1]$ srun --mem=2g --pty /bin/bash
   srun: job 17129453 queued and waiting for resources
   srun: job 17129453 has been allocated resources
   [b1s3]$
@@ -44,7 +44,7 @@ If you need to test your code, particularly when writing a new pipeline, we reco
 
 And within the new session, use nextflow as indicated above::
 
-  [b1s3]$ module load NextFlow/latest
+  [b1s3]$ conda activate nextflow
   [b1s3]$ nextflow run /path/my/test_script.nf
 
 
@@ -57,20 +57,20 @@ For larger tests, or for your established analyses, you will first have your con
 
     #!/bin/bash
     #SBATCH --partition WORK
-    #SBATCH --mem 16G
-    #SBATCH -c 8
+    #SBATCH --mem 5G
+    #SBATCH -c 1
     #SBATCH -t 12:00:00
 
     PIPELINE=$1
     CONFIG=$2
 
-    module load NextFlow/latest
+    conda activate nextflow
 
     nextflow -C ${CONFIG} run ${PIPELINE}
 
 
-Which you then can launch from hpc-head as a normal *sbatch* submission::
+Which you then can launch from login node as a normal *sbatch* submission::
 
-    [hpc-head]$ sbatch launch_nf.job /home/me/code/mypipeline.nf /home/me/code/myconfig_file.conf
+    [myuser@headnode1]$ sbatch launch_nf.job /home/me/code/mypipeline.nf /home/me/code/myconfig_file.conf
 
 When preparing your job script of course, make sure to estimate correctly the resources necessary and particularly the time. The closest is your estimate to reality, the fairer your usage is towards all other HPC users.
