@@ -64,7 +64,7 @@ or use *id_ecdsa.pub* depending on the encryption you have used.
 Request an account
 ---------------------
 
-Once you have generated or identified your **public** key, you will use that when requesting an account, following this _`link`.
+Once you have generated or identified your **public** key, you will use that when requesting an account, following this `link`_.
 
 .. _link: https://forms.gle/tiH9KDPakGPpGz2H8
 
@@ -88,6 +88,6 @@ And a session on the terminal will be opened, within the login node of the clust
 
 .. note::
 
-        In order for a graphical window to be functional on MacOS an X server needs to be installed, because the OS does not have a native one like in Linux. We recommend _`XQuartz`.
+        In order for a graphical window to be functional on MacOS an X server needs to be installed, because the OS does not have a native one like in Linux. We recommend `XQuartz`_.
 
 .. _XQuartz: https://www.xquartz.org

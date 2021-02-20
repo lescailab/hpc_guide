@@ -12,6 +12,7 @@ HPC User Guide documentation
    :caption: Contents
 
    intro
+   connect
    running_jobs
    use_software
    version_control
